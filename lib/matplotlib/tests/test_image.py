@@ -1086,6 +1086,17 @@ def test_image_cursor_formatting():
     assert im.format_cursor_data(data) == '[nan]'
 
 
+def test_format_cursor_data_BoundaryNorm():
+    # Non-invertible norms (such as BoundaryNorm) used to crash
+    # format_cursor_data; check that it now degrades gracefully instead.
+    fig, ax = plt.subplots()
+    norm = mpl.colors.BoundaryNorm(np.linspace(-4, 4, 5), 256)
+    im = ax.imshow(np.zeros((4, 4)), norm=norm)
+
+    data = 0.5
+    assert im.format_cursor_data(data) == '[0.500]'
+
+
 @check_figures_equal()
 def test_image_array_alpha(fig_test, fig_ref):
     """Per-pixel alpha channel test."""

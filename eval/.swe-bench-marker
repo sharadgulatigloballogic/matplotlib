@@ -1,0 +1,4 @@
+swe-custom-bench eval branch — base_commit: f670fe78795b18eb1118707721852209cd77ad51
+repo: matplotlib/matplotlib
+branch: eval-matplotlib__matplotlib-22711-set-b
+set: set_b (first instance)

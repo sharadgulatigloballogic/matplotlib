@@ -1120,6 +1120,20 @@ def test_range_slider(orientation):
     assert_allclose(slider.val, [0.1, 0.34])
 
 
+@pytest.mark.parametrize("orientation", ["horizontal", "vertical"])
+def test_range_slider_same_init_values(orientation):
+    # Regression test for gh-22711: constructing a RangeSlider with
+    # valinit where both values are equal produced a polygon with only
+    # 4 vertices (instead of 5), causing set_val to raise
+    # "IndexError: index 4 is out of bounds" when called from __init__.
+    fig, ax = plt.subplots()
+    slider = widgets.RangeSlider(
+        ax=ax, label="", valmin=0.0, valmax=1.0, orientation=orientation,
+        valinit=[0.0, 0.0],
+    )
+    assert_allclose(slider.val, (0.0, 0.0))
+
+
 def check_polygon_selector(event_sequence, expected_result, selections_count,
                            **kwargs):
     """
